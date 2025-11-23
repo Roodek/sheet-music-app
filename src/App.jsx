@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { CssBaseline, ThemeProvider, createTheme, CircularProgress, Box } from '@mui/material';
 import AppLayout from './components/Layout/AppLayout';
+import UploadPage from './pages/UploadPage';
+import SheetsPage from './pages/SheetsPage';
 import { useAppStore } from './store/useAppStore';
 
 const theme = createTheme({
@@ -28,12 +30,25 @@ function App() {
     );
   }
 
+  // Render different pages based on currentView
+  const renderPage = () => {
+    switch (currentView) {
+      case 'sheets':
+        return <SheetsPage />;
+      case 'upload':
+        return <UploadPage />;
+      case 'playlists':
+        return <div>Playlists Page (Coming Soon)</div>;
+      default:
+        return <SheetsPage />;
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppLayout onNavigate={setCurrentView}>
-        <h1>Current View: {currentView}</h1>
-        <p>Ready to build features!</p>
+        {renderPage()}
       </AppLayout>
     </ThemeProvider>
   );
